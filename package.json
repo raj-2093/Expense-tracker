@@ -7,6 +7,12 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webClient": "cd web-client && npm run dev",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently --prefix-colors #ffe4c4,#F25278 -n server,client  \"npm run server\" \"npm run webClient\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0"
   }
 }

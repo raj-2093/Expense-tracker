@@ -1,9 +1,15 @@
 import express from "express";
 import cors from "cors";
-import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.route.js";
 import expenseRouter from "./routes/expense.route.js";
-import { expenseMigration } from "./migrations/expense.migration.js";
+import categoryRouter from "./routes/category.route.js"
+import { createExpenses, deleteAllExpenses, expenseMigration } from "./migrations/expense.migration.js";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+
+dotenv.config({
+  path: ".env",
+});
 
 const app = express();
 
@@ -23,10 +29,8 @@ app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/expense", expenseRouter);
+app.use("/api/v1/category", categoryRouter);
 
 // Routes
-
-// temp migrations
-// expenseMigration().then(msg => console.log(`rj_ migration = ${msg}`)).catch(err => console.log(`rj_ migration err - ${err}`))
 
 export { app };

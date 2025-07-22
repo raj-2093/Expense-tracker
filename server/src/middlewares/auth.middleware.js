@@ -30,8 +30,10 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
   }
 });
 
-export const authorizeUserForExpenseOperation = asyncHandler(async (req, _, next)=>{
-    const {
-        expenseId, 
-    } = req.body;
-}) 
+const isExpenseAccessibleForReadWrite = async (req, _, next) => {
+
+}
+
+const isCategoryAccessibleForReadWrite = async (req, _, next) => {
+ 
+}

@@ -87,14 +87,18 @@ const loginHandler = asyncHandler(async (req, res) => {
   );
 
   const options = {
+    // httpOnly: true,
     httpOnly: true,
-    secure: true,
+    // secure: true,
+    secure: false
   };
 
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
+    // .cookie("accessToken", "accessToken")
     .cookie("refreshToken", refreshToken, options)
+    // .cookie("refreshToken", "refreshToken")
     .json(
       new ApiResponse(
         200,

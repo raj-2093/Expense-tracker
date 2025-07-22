@@ -23,9 +23,14 @@ const expenseSchema = new Schema(
         trim: true,
       },
     },
+    // category: {
+    //   type: String,
+    //   trim: true,
+    //   required: true,
+    // },
     category: {
-      type: String,
-      trim: true,
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     author: {
@@ -35,7 +40,7 @@ const expenseSchema = new Schema(
     },
     date: {
       type: Date,
-      default: Date.now(),
+      default: Date.now()
     },
   },
   {
