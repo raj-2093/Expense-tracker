@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../../apis/auth/auth.api";
+import { useAuth } from "../../context/auth/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [userCreds, setUserCreds] = useState({
+    userId: "",
+    password: ""
+  })
+
+  const navigate = useNavigate();
+  const {
+    loginUserWithEmailAndPassword,
+    isUserLoggedIn
+  } = useAuth();
+
+  useEffect(()=>{
+    if(isUserLoggedIn) {
+    navigate("/")
+  }
+  }, [])
 
   const onSubmit = (e) => {
     e.preventDefault();
-    login("abc@xyz.com", "123456")
-    .then((res)=> {
-      console.log(`rj_ onSubmit login res - ${res}`)
-    })
-    .catch(err => console.log(`rj_ onSubmit login err - ${err}`))
+
+    loginUserWithEmailAndPassword(userCreds.userId, userCreds.password).then(res => {
+      navigate("/")
+    }).catch(err => console.log(`Login page > onSubmit > loginUserWithEmailAndPassword - err - ${err}`))
   };
 
   return (
@@ -23,26 +40,47 @@ export default function Login() {
             Login
           </legend> */}
 
-<div className="input-elements flex flex-col items-center justify-center gap-3.5">
-        <div>
-          <label className="label">Please Enter your email or username</label>
-          <input
-            type="text"
-            className="input"
-            placeholder="Email or username"
-          />
-          {/* <p className="label">Optional</p> */}
-        </div>
+          <div className="input-elements flex flex-col items-center justify-center gap-3.5">
+            <div>
+              <label className="label">
+                Please Enter your email or username
+              </label>
+              <input
+                type="text"
+                className="input"
+                placeholder="Email or username"
+                value={userCreds.userId}
+                onChange={(e)=>{
+                  setUserCreds((creds) => {
+                    return {
+                      ...creds, userId: e.target.value
+                    }
+                  })
+                }}
+              />
+              {/* <p className="label">Optional</p> */}
+            </div>
 
-<div>
-          <label className="label">Please Enter your password</label>
-          <input type="text" className="input" placeholder="Password" />
-          {/* <p className="label">Optional</p> */}
-</div>
+            <div>
+              <label className="label">Please Enter your password</label>
+              <input type="text" className="input" placeholder="Password"
+              value={userCreds.password}
+              onChange={(e)=>{
+                  setUserCreds((creds) => {
+                    return {
+                      ...creds, password: e.target.value
+                    }
+                  })
+                }}
+              />
+              {/* <p className="label">Optional</p> */}
+            </div>
 
-          <input type="submit" value="Submit" className="btn" />
-</div>
+            <input type="submit" value="Submit" className="btn" />
+          </div>
+        <p>Don't have an account? <Link className="" to={"/signup"}><b>Sign up</b></Link> instead</p>
         </fieldset>
+
       </form>
     </div>
   );

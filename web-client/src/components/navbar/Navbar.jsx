@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -28,15 +29,16 @@ export default function Navbar() {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2">Navbar Title</div>
+          <div className="mx-2 flex-1 px-2"><Link to={"/"}>Expense Tracker</Link></div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
               <li>
-                <a>Navbar Item 1</a>
+                {/* <a>Navbar Item 1</a> */}
+                <Link to={"/expense-log"}>Expense Log</Link>
               </li>
               <li>
-                <a>Navbar Item 2</a>
+                <Link to={"/account"}>Account</Link>
               </li>
             </ul>
           </div>

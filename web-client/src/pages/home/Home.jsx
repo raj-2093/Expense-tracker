@@ -1,11 +1,18 @@
 import React from 'react'
 import { createExpense, getAllExpenses, getExpenseById } from '../../apis/expense/expense.api'
 import { login } from '../../apis/auth/auth.api'
+import { useAuth } from '../../context/auth/AuthProvider'
+import CreateExpenseModal from '../../components/modal/CreateExpenseModal';
 
 export default function Home() {
+  const {isUserLoggedIn} = useAuth();
+
+
   return (
     <div className='flex flex-col items-center justify-center page-sections-wrapper'>
       <h1 className='text-5xl'>Home</h1>
+
+      {isUserLoggedIn && <h2>user is logged in</h2>}
 
       <button className='btn' onClick={()=>{
         // login("abc@xyz.com", "123456").then(res => console.log(res)).catch(err=>console.log(err))
@@ -22,12 +29,14 @@ export default function Home() {
 
 
       <button className='btn' onClick={()=>{
-        createExpense("Creating from react", "This is a test subtitle", {
-          currency: "rupee",
-          amount: 1000
-        }, "FHUNNDYY").then(res => console.log(res)).catch(err=>console.log(err))
-      }}>Create Expense</button>
+        document.getElementById("create-expense").showModal()
+      }}>Show Modal</button>
 
+      <CreateExpenseModal modalId={"create-expense"} />
+
+      <button className='btn absolute bottom-8 right-8' style={{
+        padding: "20px",
+      }} onClick={()=>document.getElementById("create-expense").showModal()}>Create Expense</button>
       
     </div>
   )

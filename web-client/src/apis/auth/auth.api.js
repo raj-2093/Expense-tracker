@@ -42,6 +42,30 @@ const registerUser = async (fullName, email, userName, password) => {
     return res;
 }
 
+const checkTokenValidity = async () => {
+    let res = ""
+    try {
+        res = await axiosInstance.get("user/verifyToken")
+    } catch (err) {
+        console.log(`rj_ checkTokenValidity - err - ${err}`)
+    }
+    return res;
+}
+
+const logout = async () => {
+    let res = ""
+    try {
+        res = await axiosInstance.post("user/logout")
+    } catch (err) {
+        console.log(`rj_ logout - err - ${err}`)
+        throw new Error(`rj_ auth.api.js > logout error - ${err}`);
+    }
+    return res;
+}
+
 export {
-    login
+    login,
+    registerUser,
+    checkTokenValidity,
+    logout
 }
